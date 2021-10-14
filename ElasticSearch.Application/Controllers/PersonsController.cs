@@ -23,7 +23,7 @@ namespace ElasticSearch.Application.Controllers
         
         public PersonsController(IPersonService personService, 
                                  IElasticClient elasticClient,
-                                 ILogger logger)
+                                 ILogger<PersonsController> logger)
         {
             _personService = personService;
             _elasticClient = elasticClient;

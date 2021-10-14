@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ElasticSearch.Application.Services;
 using ElasticSearch.Application.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,7 +28,8 @@ namespace ElasticSearch.Application
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddElasticsearch(Configuration);
+            services.AddSingleton<IPersonService, PersonService>();
+            services.AddElasticsearch(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
