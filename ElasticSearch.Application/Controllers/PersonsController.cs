@@ -99,7 +99,7 @@ namespace ElasticSearch.Application.Controllers
         {
             var nodes = new Uri[]
             {
-                new Uri("http://192.168.12.45:9200")
+                new Uri("http://192.168.12.45:9400")
             };
 
             var pool = new StaticConnectionPool(nodes);
@@ -115,7 +115,12 @@ namespace ElasticSearch.Application.Controllers
             };
 
             //or specify index via settings.DefaultIndex("mytweetindex");
-            Console.WriteLine(client.Index(tweet, idx => idx.Index("mytweetindex")));
+            // Console.WriteLine(client.Index(tweet, idx => idx.Index("mytweetindex")));
+            // Console.WriteLine((client == _elasticClient));
+            // Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(client));
+            // Console.WriteLine("=================================");
+            // Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(_elasticClient));
+            Console.WriteLine(_elasticClient.Index(tweet, idx => idx.Index("mytweetindex")));
             return ""; 
         }
 
