@@ -6,7 +6,7 @@ namespace ElasticSearch.Application.Services
 {
     public interface IPersonService
     {
-        Task<IEnumerable<Person>> GetPersons(int count, int skip = 0);
+        Task<IEnumerable<Person>> GetPersons(string query, int count, int skip = 0);
         Task<Person> GetPersonById(int id);
         Task<IEnumerable<Person>> GetPersonByName(string name);
         Task<IEnumerable<Person>> GetPersonByAddress(string address);

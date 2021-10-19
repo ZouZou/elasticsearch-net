@@ -17,13 +17,22 @@ namespace ElasticSearch.Application.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<Person>> GetPersons(int count, int skip = 0)
+        public async Task<IEnumerable<Person>> GetPersons(string query, int count, int skip = 0)
         {
             var persons = await _elasticClient.SearchAsync<Person>(
                 s => s
+                .Query(q => q.QueryString(d => d.Query('*' + query + '*')))
                 .From(skip)
                 .Take(count)
             );
+
+            if (!persons.IsValid)
+            {
+                // We could handle errors here by checking response.OriginalException 
+                //or response.ServerError properties
+                _logger.LogError("Failed to search documents");
+                return (new Person[] { });
+            }
 
             return persons.Documents;
         }
