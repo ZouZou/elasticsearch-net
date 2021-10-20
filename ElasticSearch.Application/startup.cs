@@ -29,6 +29,7 @@ namespace ElasticSearch.Application
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IPersonService, PersonService>();
+            services.AddSingleton<IQuoteService, QuoteService>();
             services.AddElasticsearch(Configuration);
             services.AddControllers();
             services.AddSwaggerGen(c =>

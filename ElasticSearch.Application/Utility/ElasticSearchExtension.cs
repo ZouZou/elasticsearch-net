@@ -32,12 +32,21 @@ namespace ElasticSearch.Application.Utility
             services.AddSingleton<IElasticClient>(client);
 
             CreateIndex(client, defaultIndex);
+            CreateQuoteIndex(client, "quotes");
         }
 
         private static void AddDefaultMappings(ConnectionSettings settings)
         {
             settings
-                .DefaultMappingFor<Person>(m => m.IndexName("persons"));
+                .DefaultMappingFor<Person>(m => m
+                    .IndexName("persons")
+                    .IdProperty(p => p.Id)
+                );
+            settings
+                .DefaultMappingFor<Quote>(m => m
+                    .IndexName("quote")
+                    .IdProperty(p => p.RequestReferenceNo)
+                );
             // settings
             //     .DefaultMappingFor<Tweet>(m => m);
         }
@@ -46,6 +55,12 @@ namespace ElasticSearch.Application.Utility
         {  
             var createIndexResponse = client.Indices.Create(indexName,
                 index => index.Map<Person>(x => x.AutoMap())
+            );
+        }
+        private static void CreateQuoteIndex(IElasticClient client, string indexName)
+        {  
+            var createIndexResponse = client.Indices.Create(indexName,
+                index => index.Map<Quote>(x => x.AutoMap())
             );
         }
     }
